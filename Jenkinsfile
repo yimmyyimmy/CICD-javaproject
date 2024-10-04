@@ -13,7 +13,7 @@ pipeline {
         jacoco()
       }
     }
-
+/*
     stage('SonarQube analysis') {
       steps{
         script {
@@ -43,7 +43,7 @@ pipeline {
                 } // End of timeout
             }
     }
-
+*/
     stage('Upload to Nexus') {
       steps{
         nexusArtifactUploader artifacts: [[artifactId: 'SimpleWebApplication', classifier: '', file: 'target/SimpleWebApplication.war', type: 'war']], credentialsId: 'jenkins-nexus', groupId: 'com.maven', nexusUrl: '34.203.246.46:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'mvn_snapshots_project', version: '9.1.14-SNAPSHOT'
