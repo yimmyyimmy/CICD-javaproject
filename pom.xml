@@ -67,12 +67,12 @@
   
    <distributionManagement>
     <snapshotRepository>
-      <id>nexus-snapshots</id>
-      <url>https://agile.com/</url>
+      <id>nexus</id>
+      <url>http://15.206.160.152:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
-      <id>nexus-releases</id>
-      <url>https://agile.com/</url>
+      <id>nexus</id>
+      <url>http://15.206.160.152:8081/repository/maven-releases/</url>
     </repository>
   </distributionManagement>
 
