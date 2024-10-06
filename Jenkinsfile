@@ -56,7 +56,7 @@ pipeline {
         sh 'echo "Here we deploy the build to tomcat"'
         sh 'pwd'
         sh 'ls -al'
-        sh 'scp -o StrictHostKeyChecking=no /home/jenkins/workspace/javapipeline/target/SimpleWebApplication.war root@15.206.210.179:8080:/opt/apache-tomcat-10.1.30/webapps'
+        sh 'scp -o StrictHostKeyChecking=no /home/jenkins/workspace/javapipeline/target/SimpleWebApplication.war root@15.206.210.179:/opt/apache-tomcat-10.1.30/webapps'
         
         deploy adapters: [tomcat9(credentialsId: '9ae28e96-08b4-43bd-a07d-418c21df2572', path: '', url: 'http://15.206.210.179:8080/')], contextPath: '/home/jenkins/workspace/javapipeline/target/', war: '**/SampleWebApplication.war'
        
