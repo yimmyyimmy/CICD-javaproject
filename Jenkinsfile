@@ -44,11 +44,13 @@ pipeline {
             }
     }
 */
+    /*
     stage('Upload to Nexus') {
       steps{
          nexusArtifactUploader artifacts: [[artifactId: 'SimpleWebApplication', classifier: '', file: 'target/SimpleWebApplication.war', type: 'war']], credentialsId: 'nexus_credentials', groupId: 'com.maven', nexusUrl: '13.127.33.65:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '9.1.14-SNAPSHOT'
       }
     }
+    */
     stage('Deploy to Tomcat') {
       steps{
         sh 'echo "Here we deploy the build to tomcat"'
