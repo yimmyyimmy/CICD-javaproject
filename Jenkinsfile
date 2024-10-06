@@ -54,6 +54,8 @@ pipeline {
     stage('Deploy to Tomcat') {
       steps{
         sh 'echo "Here we deploy the build to tomcat"'
+        sh 'pwd'
+        sh 'll'
         sh 'chmod -R 777 /opt/apache-tomcat-10.1.30/webapps'
         sh 'scp -o StrictHostKeyChecking=no /home/jenkins/workspace/javapipeline/target/SimpleWebApplication.war root@15.206.210.179:8080:/opt/apache-tomcat-10.1.30/webapps'
         
