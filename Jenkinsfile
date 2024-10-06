@@ -56,7 +56,6 @@ pipeline {
         
         deploy adapters: [tomcat9(credentialsId: '9ae28e96-08b4-43bd-a07d-418c21df2572', path: '', url: 'http://15.206.210.179:8080/')], contextPath: '/home/jenkins/workspace/javapipeline/target/', war: '**/SampleWebApplication.war'
        
- '
         //deploy adapters: [tomcat9(credentialsId: '9ae28e96-08b4-43bd-a07d-418c21df2572', path: '', url: 'http://15.206.210.179:8080/')], contextPath: null, war: '**/SampleWebApplication.war'
       }
     }
