@@ -7,6 +7,11 @@ pipeline {
       steps{
         sh 'mvn clean install'
       }
-    } 
+    }  
+    stage('jacoco') {
+      steps{
+        jacoco()
+      }
+    }
   }
 }
