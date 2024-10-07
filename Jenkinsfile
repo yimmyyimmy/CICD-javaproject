@@ -13,7 +13,7 @@ pipeline {
         jacoco()
       }
     }
-    */
+    /*
     stage('SonarQube analysis') {
       steps{
         script {
