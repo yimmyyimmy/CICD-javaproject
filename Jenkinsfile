@@ -49,7 +49,7 @@ pipeline {
       }
     }
     */
-    /*
+    
      stage('Deploy to Tomcat') {
       steps{
         sh 'echo "Here we deploy the build to tomcat"'
@@ -62,11 +62,12 @@ pipeline {
         //deploy adapters: [tomcat9(credentialsId: '9ae28e96-08b4-43bd-a07d-418c21df2572', path: '', url: 'http://15.206.210.179:8080/')], contextPath: null, war: '**/SampleWebApplication.war'
       }
     }
-*/
+/*
      stage('Send build artifacts over SSH') {
         steps{
                 sshPublisher(publishers: [sshPublisherDesc(configName: 'Tomcat_Deploy', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: 'apache-tomcat-10.1.30/webapps', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: 'target/SimpleWebApplication.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
             }
         }
+        */
   }
 }
