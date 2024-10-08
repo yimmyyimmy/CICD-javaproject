@@ -6,7 +6,7 @@ pipeline {
   environment {
     EMAIL_RECIPIENTS = 'july10foraws@gmail.com'
     PATH = "/opt/apache-maven-3.9.2/bin:${PATH}"
-    NEXUS_URL = 'http://54.92.208.105:8081/repository/snapshotnew/'
+    NEXUS_URL = 'http://13.233.179.146:8081/repository/hosaprpject-snapshot/'
     NEXUS_CREDENTIALS = credentials('jenkins-nexus') // Jenkins credentials for Nexus
     GROUP_ID = 'com.maven'
     ARTIFACT_ID = 'SimpleWebApplication'
@@ -14,11 +14,11 @@ pipeline {
     WAR_FILE_NAME = "SimpleWebApplication.war"
     //WAR_FILE_NAME = "${ARTIFACT_ID}-${VERSION}.war"
     TOMCAT_CREDENTIALS = credentials('tomcat-password')
-    TOMCAT_URL = 'http://54.224.220.179:8080/'
+    TOMCAT_URL = 'http://13.127.198.212:8080/'
     TOMCAT_WEBAPPS_DIR = '/opt/tomcat/apache-tomcat-10.1.30/webapps' // Define your Tomcat webapps directory here
     WORKSPACE = '/home/tomcat/workspace/Javawebappproject'
     NEXUSUSER_NAME = 'admin'
-    NEXUS_PASSWORD = 'admin12'
+    NEXUS_PASSWORD = 'passw0rd'
   }
   
   stages {
@@ -74,7 +74,7 @@ pipeline {
         ]], 
         credentialsId: 'jenkins-nexus', 
         groupId: 'com.maven', 
-        nexusUrl: '54.92.208.105:8081', // Ensure protocol is included
+        nexusUrl: 'http://13.233.179.146:8081', // Ensure protocol is included
         nexusVersion: 'nexus3', 
         protocol: 'http', 
         repository: 'snapshotnew', 
@@ -84,7 +84,7 @@ pipeline {
     
     stage('Deploy WAR from Nexus to Tomcat') {
       agent {
-        label "tomcat"
+        label "tommy-node"
       }
       steps {
         script {
@@ -98,7 +98,7 @@ curl -u ${NEXUSUSER_NAME}:${NEXUS_PASSWORD} -O ${NEXUS_URL}${WAR_FILE_NAME}
 
 stage('Deploy WAR to Tomcat') {
           agent {
-              label "tomcat"
+              label "tommy-node"
                 }
            steps {
                withCredentials([usernamePassword(credentialsId: 'tomcat-password', usernameVariable: 'hostmanager', passwordVariable: 'hostmanager1')]) {
