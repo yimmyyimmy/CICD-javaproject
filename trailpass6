@@ -84,7 +84,7 @@ pipeline {
   
      stage('Deploy WAR from Nexus to Tomcat') {
       agent {
-        label "Tomcat"
+        label "tomcat"
       }
       steps {
         script {
@@ -99,7 +99,7 @@ pipeline {
 
 stage('Deploy WAR to Tomcat') {
           agent {
-              label "Tomcat"
+              label "tomcat"
                 }
            steps {
               // withCredentials([usernamePassword(credentialsId: 'tomcat_server', usernameVariable: 'hostmanager', passwordVariable: 'hostmanager1')]) {
