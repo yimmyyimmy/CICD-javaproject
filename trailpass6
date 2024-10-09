@@ -105,7 +105,7 @@ stage('Deploy WAR to Tomcat') {
               // withCredentials([usernamePassword(credentialsId: 'tomcat_server', usernameVariable: 'hostmanager', passwordVariable: 'hostmanager1')]) {
                    script {
                         sh "sudo systemctl stop tomcat"
-                        sh "cp ${WORKSPACE}${WAR_FILE_NAME}/ ${TOMCAT_WEBAPPS_DIR}"
+                        sh "cp -R ${WORKSPACE}${WAR_FILE_NAME}/ ${TOMCAT_WEBAPPS_DIR}"
                         sh "sudo systemctl start tomcat"
                    }
                }
