@@ -102,7 +102,7 @@ stage('Deploy WAR to Tomcat') {
               label "tomcat"
                 }
            steps {
-              // withCredentials([usernamePassword(credentialsId: 'tomcat_server', usernameVariable: 'hostmanager', passwordVariable: 'hostmanager1')]) {
+              // withCredentials([usernamePassword(credentialsId: 'tomcat_server', usernameVariable: 'hostmanager', passwordVariable: 'hostmanager1')]) 
                    script {
                         sh "sudo systemctl stop tomcat"
                         sh "cp /home/tomcat/workspace/Javawebappproject/SimpleWebApplication-9.1.14.war ${TOMCAT_WEBAPPS_DIR}"
@@ -110,7 +110,7 @@ stage('Deploy WAR to Tomcat') {
                         sh "sudo systemctl start tomcat"
                    }
                }
-}
+        }
   post {
     failure {
       script {
@@ -128,6 +128,5 @@ stage('Deploy WAR to Tomcat') {
         )
       }
     }
-}
-}
+  }
 }
