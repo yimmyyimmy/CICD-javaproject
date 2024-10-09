@@ -126,6 +126,7 @@ stage('Deploy WAR to Tomcat') {
               subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) succeeded.",
               body: "Please visit ${env.BUILD_URL} for further information."
         )
+        }
       }
     }
   }
