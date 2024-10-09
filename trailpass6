@@ -12,7 +12,7 @@ pipeline {
     ARTIFACT_ID = 'SimpleWebApplication'
     VERSION = '9.1.14-SNAPSHOT'
     //WAR_FILE_NAME = "SimpleWebApplication.war"
-    WAR_FILE_NAME = "${ARTIFACT_ID}-${VERSION}-*.war"
+    WAR_FILE_NAME = "${ARTIFACT_ID}-${VERSION}-.war"
     TOMCAT_CREDENTIALS = credentials('tomcat-password')
     TOMCAT_URL = 'http://54.172.228.221:8080/'
     TOMCAT_WEBAPPS_DIR = '/opt/tomcat/apache-tomcat-10.1.30/webapps/' // Define your Tomcat webapps directory here
@@ -105,7 +105,7 @@ stage('Deploy WAR to Tomcat') {
               // withCredentials([usernamePassword(credentialsId: 'tomcat_server', usernameVariable: 'hostmanager', passwordVariable: 'hostmanager1')]) {
                    script {
                         sh "sudo systemctl stop tomcat"
-                        sh "cp /${WORKSPACE}/${WAR_FILE_NAME}/ ${TOMCAT_WEBAPPS_DIR}/"
+                        sh "cp ${WORKSPACE}${WAR_FILE_NAME}/ ${TOMCAT_WEBAPPS_DIR}"
                         sh "sudo systemctl start tomcat"
                    }
                }
