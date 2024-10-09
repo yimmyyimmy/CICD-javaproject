@@ -106,7 +106,7 @@ stage('Deploy WAR to Tomcat') {
                    script {
                         sh "sudo systemctl stop tomcat"
                         sh "cp /home/tomcat/workspace/Javawebappproject/SimpleWebApplication-9.1.14.war ${TOMCAT_WEBAPPS_DIR}"
-                       #sh "sudo cp ${WORKSPACE}${WAR_FILE_NAME}/ ${TOMCAT_WEBAPPS_DIR}"
+                       //sh "sudo cp ${WORKSPACE}${WAR_FILE_NAME}/ ${TOMCAT_WEBAPPS_DIR}"
                         sh "sudo systemctl start tomcat"
                    }
                }
