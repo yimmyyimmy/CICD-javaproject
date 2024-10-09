@@ -6,8 +6,8 @@ pipeline {
   environment {
    // EXECUTOR_NUMBER = env.EXECUTOR_NUMBER
    // NODE_NAME = env.NODE_NAME
-    NODE_NAME: 'java'
-    NODE_NAME: 'tomcat'
+  //  NODE_NAME: 'java'
+   // NODE_NAME: 'tomcat'
    // JOB_NAME  = env.JOB_NAME
    // BUILD_NUMBER = env.BUILD_NUMBER
    // BUILD_URL = env.BUILD_URL
