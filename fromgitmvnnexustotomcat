@@ -111,7 +111,7 @@ stage('Deploy WAR to Tomcat') {
                    }
                }
 
-post {
+  post {
     failure {
       script {
         mail (to: 'pramodprasanna17@gmail.com',
@@ -128,6 +128,5 @@ post {
         )
       }
     }
-}
 }
 }
