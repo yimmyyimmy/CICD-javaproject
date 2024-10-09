@@ -4,9 +4,13 @@ pipeline {
   }
   
   environment {
-    env.JOB_NAME  = 'javawebapp'
-    env.BUILD_NUMBER = 'released'
-    env.BUILD_URL = 'http://54.172.228.221:8080/SimpleWebApplication-9.1.14'
+    EXECUTOR_NUMBER = env.EXECUTOR_NUMBER
+    NODE_NAME = env.NODE_NAME
+    NODE_NAME: 'java'
+    NODE_NAME: 'tomcat'
+    JOB_NAME  = env.JOB_NAME
+    BUILD_NUMBER = env.BUILD_NUMBER
+    BUILD_URL = env.BUILD_URL
     EMAIL_RECIPIENTS = 'pramodprasanna17@gmail.com'
     PATH = "/opt/apache-maven-3.9.2/bin:${PATH}"
     NEXUS_URL = 'http://44.212.34.244:8081/repository/maven-releases/'
@@ -26,6 +30,7 @@ pipeline {
   
   stages {
     stage('Build') {
+          echo "Building on node ${NODE_NAME} with executor ${EXECUTOR_NUMBER}"
       steps {
         sh 'mvn clean install'
       }
@@ -86,6 +91,7 @@ pipeline {
     }
   
      stage('Deploy WAR from Nexus to Tomcat') {
+        echo "Building on node ${NODE_NAME} with executor ${EXECUTOR_NUMBER}"
       agent {
         label "tomcat"
       }
@@ -101,6 +107,7 @@ pipeline {
 }
 
 stage('Deploy WAR to Tomcat') {
+            echo "Building on node ${NODE_NAME} with executor ${EXECUTOR_NUMBER}"
           agent {
               label "tomcat"
                 }
