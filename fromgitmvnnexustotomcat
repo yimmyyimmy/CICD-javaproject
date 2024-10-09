@@ -110,8 +110,7 @@ stage('Deploy WAR to Tomcat') {
                         sh "sudo systemctl start tomcat"
                    }
                }
-           }
-       }
+
 post {
     failure {
       script {
@@ -129,4 +128,6 @@ post {
         )
       }
     }
+}
+}
 }
