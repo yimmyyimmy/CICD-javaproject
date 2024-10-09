@@ -111,6 +111,7 @@ stage('Deploy WAR to Tomcat') {
                    }
                }
         }
+}
   post {
     failure {
       script {
@@ -130,4 +131,3 @@ stage('Deploy WAR to Tomcat') {
       }
     }
   }
-}
