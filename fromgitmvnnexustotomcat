@@ -4,6 +4,9 @@ pipeline {
   }
   
   environment {
+    env.JOB_NAME  = 'javawebapp'
+    env.BUILD_NUMBER = 'released'
+    env.BUILD_URL = 'http://54.172.228.221:8080/SimpleWebApplication-9.1.14'
     EMAIL_RECIPIENTS = 'pramodprasanna17@gmail.com'
     PATH = "/opt/apache-maven-3.9.2/bin:${PATH}"
     NEXUS_URL = 'http://44.212.34.244:8081/repository/maven-releases/'
