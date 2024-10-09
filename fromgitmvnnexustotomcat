@@ -31,6 +31,7 @@ pipeline {
   stages {
     stage('Build') {
           //echo "Building on node ${NODE_NAME} with executor ${EXECUTOR_NUMBER}"
+           // echo "Building job ${env.JOB_NAME} (#${env.BUILD_NUMBER}) at ${env.BUILD_URL}"
       steps {
         sh 'mvn clean install'
       }
