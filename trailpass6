@@ -81,7 +81,7 @@ pipeline {
         version: '9.1.14'
       }
     }
-  /*
+  
      stage('Deploy WAR from Nexus to Tomcat') {
       agent {
         label "tomcat"
@@ -90,7 +90,7 @@ pipeline {
         script {
           // Download the WAR from Nexus
           sh """
-          curl -u admin:admin12 -O http://44.212.34.244:8081/repository/snapshotnew/com/maven/SimpleWebApplication/9.1.14-SNAPSHOT/SimpleWebApplication-9.1.14-20241009.090452-1.war
+          curl -u admin:admin12 -O http://44.212.34.244:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war
           pwd
           """
 }
@@ -110,6 +110,5 @@ stage('Deploy WAR to Tomcat') {
                    }
                }
            }
-*/
        }
       }
