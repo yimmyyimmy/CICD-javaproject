@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clean Up Failed Builds') {
+            steps {
+                script {
+                    // Define the job name and maximum number of builds to keep
+                    def jobName = env.JOB_NAME
+                    def maxBuildsToKeep = 10
+
+                    // Get the build history
+                    def buildHistory = Jenkins.instance.getItemByFullName(jobName).getBuilds()
+
+                    // Iterate over the builds and delete failed ones
+                    buildHistory.each { build ->
+                        if (build.result == hudson.model.Result.FAILURE && build.number <= buildHistory.size() - maxBuildsToKeep) {
+                            build.delete()
+                            println "Deleted failed build #${build.number}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
