@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Environment')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    env.BRANCH_NAME = env.BRANCH_NAME ?: env.GIT_BRANCH.split('/').last()
+                    currentBuild.displayName = "#${BUILD_NUMBER} - ${BRANCH_NAME} - ${JOB_NAME}"
+                }
+            }
+        }
+        stage('Environment Specific Build') {
+            steps {
+                script {
+                    if (params.ENVIRONMENT == 'dev') {
+                        // Run dev build
+                        sh 'make dev-build'
+                    } else if (params.ENVIRONMENT == 'staging') {
+                        // Run staging build
+                        sh 'make staging-build'
+                    } else if (params.ENVIRONMENT == 'uat') {
+                        // Run UAT build
+                        sh 'make uat-build'
+                    } else {
+                        error 'Invalid environment specified'
+                    }
+                }
+            }
+        }
+    }
+}
