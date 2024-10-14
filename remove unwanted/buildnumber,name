@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Environment')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    env.BRANCH_NAME = env.BRANCH_NAME ?: env.GIT_BRANCH.split('/').last()
+                    currentBuild.displayName = "#${BUILD_NUMBER} - ${BRANCH_NAME} - ${JOB_NAME}"
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+in job configure need to add in advanced step==
+#${BUILD_NUMBER} - ${BRANCH_NAME} - ${JOB_NAME}
