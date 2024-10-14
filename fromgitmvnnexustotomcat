@@ -13,7 +13,7 @@ pipeline {
    // BUILD_URL = env.BUILD_URL
     EMAIL_RECIPIENTS = 'pramodprasanna17@gmail.com'
     PATH = "/opt/apache-maven-3.9.2/bin:${PATH}"
-    NEXUS_URL = 'http://44.212.34.244:8081/repository/maven-releases/'
+    NEXUS_URL = 'http://3.86.194.216:8081/repository/maven-releases/'
     NEXUS_CREDENTIALS = credentials('jenkins-nexus') // Jenkins credentials for Nexus
     GROUP_ID = 'com.maven'
     ARTIFACT_ID = 'SimpleWebApplication'
@@ -21,7 +21,7 @@ pipeline {
     //WAR_FILE_NAME = "SimpleWebApplication.war"
     WAR_FILE_NAME = "${ARTIFACT_ID}-${VERSION}.war"
     TOMCAT_CREDENTIALS = credentials('tomcat-password')
-    TOMCAT_URL = 'http://54.172.228.221:8080/'
+    TOMCAT_URL = 'http://54.198.88.98:8080/'
     TOMCAT_WEBAPPS_DIR = '/opt/tomcat/apache-tomcat-10.1.30/webapps/' // Define your Tomcat webapps directory here
     WORKSPACE = '/home/tomcat/workspace/Javawebappproject/'
     NEXUSUSER_NAME = 'admin'
@@ -83,7 +83,7 @@ pipeline {
         ]], 
         credentialsId: 'jenkins-nexus', 
         groupId: 'com.maven', 
-        nexusUrl: '44.212.34.244:8081', // Ensure protocol is included
+        nexusUrl: '3.86.194.216:8081', // Ensure protocol is included
         nexusVersion: 'nexus3', 
         protocol: 'http', 
         repository: 'maven-releases', 
@@ -100,7 +100,7 @@ pipeline {
         script {
           // Download the WAR from Nexus
           sh """
-          curl -u admin:admin12 -O http://44.212.34.244:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war
+          curl -u admin:admin12 -O http://3.86.194.216:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war
           pwd
           """
 }
