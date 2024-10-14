@@ -1,0 +1,30 @@
+Explanation:
+This script uses the Jenkins Pipeline syntax.
+The agent any line specifies that the pipeline can run on any available agent.
+The Clean Up Failed Builds stage defines the cleanup process.
+The script block contains the Groovy code for the cleanup.
+JOB_NAME is an environment variable that refers to the current job name.
+maxBuildsToKeep defines the number of successful builds to retain.
+The script retrieves the build history using Jenkins.instance.getItemByFullName(jobName).getBuilds().
+It iterates over the builds and checks if a build is failed (hudson.model.Result.FAILURE) and older than the specified maxBuildsToKeep.
+If both conditions are met, the build is deleted using build.delete().
+A message is printed to the console indicating the deleted build number.
+How to use:
+Create a new Jenkins job or edit an existing one.
+Add a new pipeline or modify the existing Jenkinsfile.
+Paste the above script into the pipeline.
+Configure the maxBuildsToKeep variable according to your requirements.
+Save and run the pipeline.
+Alternative: Using Jenkins UI
+If you prefer not to use a pipeline script, you can also configure Jenkins to automatically discard old builds via the UI:
+Go to the job configuration page.
+Scroll down to the "Build Settings" section.
+Click on "Advanced Project Options".
+Check "Discard Old Builds".
+Set "Max # of builds to keep" to your desired value.
+Save the changes.
+This will automatically discard old builds, including failed ones, based on the specified limit.
+Note:
+Make sure to test the pipeline/script in a non-production environment before running it on your actual Jenkins instance.
+Be cautious when deleting builds, as this action is irreversible.
+Consider configuring Jenkins to keep a reasonable number of successful builds for auditing and tracking purposes.
