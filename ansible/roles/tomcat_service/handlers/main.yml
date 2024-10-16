@@ -1,0 +1,7 @@
+---
+# handlers/main.yml
+- name: Restart Tomcat service
+  systemd:
+    name: tomcat
+    state: restarted
+  become: true

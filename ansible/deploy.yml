@@ -1,0 +1,7 @@
+---
+- hosts: jenkinsServers
+  become: true
+  vars_files:
+    - /etc/ansible/nexus_vault.yml
+  roles:
+    - role: nexus_artifact_deploy  # Download and deploy the artifact

@@ -1,0 +1,49 @@
+---
+- name: Create myworkspace directory
+  file:
+    path: /home/tomcat/mybackup
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: '0755'
+  become: true
+
+# tasks file for nexus_artifact_deploy
+- name: Download WAR file from Nexus repository
+  get_url:
+    url: "http://44.208.21.93:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war"
+    dest: "/home/tomcat/mybackup/SimpleWebApplication.war"
+    url_username: "{{ nexus_username }}"
+    url_password: "{{ nexus_password }}"
+  become: true
+
+# Stop the Tomcat service
+- name: Stop Tomcat service
+  systemd:
+    name: tomcat
+    state: stopped
+  become: yes
+
+# Deploy the WAR file
+- name: Deploy WAR file
+  copy:
+    src: /home/tomcat/mybackup/SimpleWebApplication.war
+    dest: /home/tomcat/apache-tomcat-10.1.31/webapps/SimpleWebApplication.war
+    remote_src: yes
+  become: yes
+
+- name: Set ownership of the WAR file to tomcat user and group
+  file:
+    path: /home/tomcat/apache-tomcat-10.1.31/webapps/SimpleWebApplication.war
+    owner: tomcat
+    group: tomcat
+    mode: '0644'
+  become: true
+
+# Start the Tomcat service
+- name: Start Tomcat service
+  systemd:
+    name: tomcat
+    state: started
+    enabled: true
+  become: yes

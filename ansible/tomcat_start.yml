@@ -1,0 +1,12 @@
+---
+- name: Start Tomcat service
+  hosts: jenkinsServers
+  become: true
+  become_user: ubuntu
+  vars:
+    tomcat_action: "{{ action | default('start') }}"
+  tasks:
+    - name: Start Tomcat
+      shell: "/home/ubuntu/apache-tomcat-10.1.31/bin/startup.sh"
+      when: tomcat_action == 'start'
+      become_user: root

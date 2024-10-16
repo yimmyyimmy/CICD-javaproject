@@ -1,0 +1,13 @@
+---
+- name: Stop Tomcat service
+  hosts: jenkinsServers
+  become: true
+  become_user: ubuntu
+  vars:
+    tomcat_action: "{{ action | default('stop') }}"
+  tasks:
+    - name: Stop Tomcat
+      shell: "/home/ubuntu/apache-tomcat-10.1.31/bin/shutdown.sh"
+      when: tomcat_action == 'stop'
+      become_user: root
+

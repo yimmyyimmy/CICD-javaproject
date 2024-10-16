@@ -1,0 +1,51 @@
+---
+# tasks file for trailRoles
+- name: Add tomcat user
+  user:
+    name: tomcat
+  become: true
+
+- name: Setting the permission for tomcat
+  file:
+    path: /home/tomcat
+    state: directory
+    mode: '0755'
+    owner: tomcat
+    group: tomcat
+    recurse: yes
+  become: true
+
+- name: Download tomcat binary file
+  get_url:
+    url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.31/bin/apache-tomcat-10.1.31.tar.gz
+    dest: /home/tomcat
+    owner: tomcat
+    group: tomcat
+    mode: '0644'
+  become: true
+
+- name: Unarchive tomcat binary file
+  unarchive:
+    src: /home/tomcat/apache-tomcat-10.1.31.tar.gz
+    dest: /home/tomcat
+    remote_src: yes
+    owner: tomcat
+    group: tomcat
+  become: true
+
+- name: Copy unit file to systemd
+  copy:
+    src: tomcat.service
+    dest: /etc/systemd/system/tomcat.service
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Enable and start tomcat
+  systemd:
+    daemon_reload: true
+    name: tomcat
+    state: started
+    enabled: true
+  become: true

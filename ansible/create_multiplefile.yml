@@ -1,0 +1,20 @@
+---
+- name: Playbook to create files
+  hosts: jenkinsServers
+  become: true
+  become_user: ubuntu
+  tasks:
+    - name: Create a single file
+      file:
+        path: /home/ubuntu/tfile1
+        state: touch
+
+    - name: Create multiple files
+      file:
+        path: "{{ item }}"
+        state: touch
+        mode: '0654'
+      with_items:
+        - '/home/ubuntu/file1'
+        - '/home/ubuntu/file2'
+        - '/home/ubuntu/file3'

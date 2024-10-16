@@ -1,0 +1,12 @@
+---
+- name: Uninstall the Maven
+  hosts: jenkinsServers
+  become: true
+  become_user: ubuntu
+  tasks:
+    - name: Uninstall Maven
+      apt:
+        name: maven
+        state: absent
+      become: true
+      become_user: root

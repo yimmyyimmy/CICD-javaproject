@@ -1,0 +1,9 @@
+---
+# tasks file for tomcat_service
+- name: Start Tomcat service
+  include_tasks: start.yml
+  when: start_service | default(false)
+
+- name: Stop Tomcat service
+  include_tasks: stop.yml
+  when: stop_service | default(false)

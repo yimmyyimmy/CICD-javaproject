@@ -1,0 +1,8 @@
+---
+# tasks/start.yml
+- name: Start Tomcat service
+  systemd:
+    name: tomcat
+    state: started
+    enabled: true
+  become: true

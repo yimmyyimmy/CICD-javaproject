@@ -1,0 +1,8 @@
+---
+- hosts: jenkinsServers
+  become: true
+  roles:
+    - role: trailRoles  # Set up Tomcat
+    - role: tomcat_service
+      start_service: true  # Start the Tomcat service after setup
+      stop_service: false   # Set to true to stop the service if needed

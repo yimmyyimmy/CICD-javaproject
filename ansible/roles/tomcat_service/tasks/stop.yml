@@ -1,0 +1,7 @@
+---
+# tasks/stop.yml
+- name: Stop Tomcat service
+  systemd:
+    name: tomcat
+    state: stopped
+  become: true
