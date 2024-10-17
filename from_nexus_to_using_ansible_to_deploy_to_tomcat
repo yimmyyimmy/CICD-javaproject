@@ -91,7 +91,7 @@ pipeline {
       }
     }
 
-    tage('Launchthe application') {
+    stage('Launchthe application') {
     agent {
         label "ansibleserver1"
     }
