@@ -66,5 +66,17 @@ pipeline {
             }
         }
         */
+     stage('ansible deploy') {
+        agent {
+        label "ansible"
+    }
+      steps{
+        script {
+ 	        	sh """
+                ansible-playbook /etc/ansible/playbookk.yml -i /etc/ansible/hosts
+            """
+           }
+      }
+    }  
   }
 }
