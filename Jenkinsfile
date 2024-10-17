@@ -73,7 +73,7 @@ pipeline {
       steps{
         script {
  	        	sh """
-                ansible-playbook /etc/ansible/playbookk.yml -i /etc/ansible/hosts
+                ansible-playbook /etc/ansible/playbooks/warbackup.yml -i /etc/ansible/hosts
             """
            }
       }
