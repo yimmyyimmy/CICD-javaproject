@@ -98,7 +98,7 @@ pipeline {
     steps {
 	script {
  	  	sh """
-		ansible-playbook allRinclude.yml
+		ansible-playbook /etc/ansible/allRinclude.yml
                 #ansible-playbook /etc/ansible/playbook.yml 
 		#ansible-playbook /etc/ansible/deploy.yml
             """
