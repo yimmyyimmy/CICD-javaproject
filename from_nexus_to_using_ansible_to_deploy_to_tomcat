@@ -98,8 +98,8 @@ pipeline {
     steps {
 	script {
  	  	sh """
-                ansible-playbook playbook.yml 
-		ansible-playbook deploy.yml
+                ansible-playbook /etc/ansible/playbook.yml 
+		ansible-playbook /etc/ansible/deploy.yml
             """
            }
         }
