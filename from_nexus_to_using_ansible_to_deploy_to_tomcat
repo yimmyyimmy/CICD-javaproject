@@ -91,14 +91,15 @@ pipeline {
       }
     }
 
-    stage('Launchthe application') {
+    tage('Launchthe application') {
     agent {
         label "ansibleserver1"
     }
     steps {
 	script {
  	  	sh """
-                ansible-playbook /etc/ansible/deploy.yml -i /etc/ansible/hosts
+                ansible-playbook playbook.yml 
+		ansible-playbook deploy.yml
             """
            }
         }
