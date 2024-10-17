@@ -51,6 +51,9 @@ pipeline {
       }
     }
      stage('Deploy to Tomcat') {
+          agent {
+        label "ansible"
+    }
       steps{
         sh 'echo "Here we deploy the build to tomcat"'
         sh 'pwd'
