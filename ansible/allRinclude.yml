@@ -1,0 +1,11 @@
+---
+- hosts: jenkinsServers
+  become: true
+  vars_files:
+    - /etc/ansible/nexus_vault.yml  # Adjust this path to your actual vault file location
+  roles:
+    - role: trailRoles
+    - role: nexus_artifact_deploy
+    - role: tomcat_service
+      start_service: true
+      stop_service: false

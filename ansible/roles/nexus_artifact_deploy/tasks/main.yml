@@ -1,49 +1,71 @@
 ---
-- name: Create myworkspace directory
+- name: Ensure workspace directory exists
+  file: 
+    path: /home/ansibleserver/workspace/Javawebappproject 
+    state: directory 
+    owner: ansibleserver 
+    group: ansibleserver 
+    mode: '0755' 
+  become: true 
+  register: workspace_dir
+
+- name: Check ownership of the workspace directory
+  command: ls -ld /home/ansibleserver/workspace/Javawebappproject
+  register: dir_check
+  ignore_errors: true
+  become: true
+
+- debug:
+    msg: "Ownership and permissions of workspace directory: {{ dir_check.stdout }}"
+
+- name: Create myartifact directory if it doesn't exist
   file:
-    path: /home/tomcat/mybackup
+    path: /home/tomcat/myartifact
     state: directory
     owner: tomcat
     group: tomcat
     mode: '0755'
   become: true
 
-# tasks file for nexus_artifact_deploy
 - name: Download WAR file from Nexus repository
   get_url:
-    url: "http://44.208.21.93:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war"
-    dest: "/home/tomcat/mybackup/SimpleWebApplication.war"
-    url_username: "{{ nexus_username }}"
-    url_password: "{{ nexus_password }}"
+    url: "http://44.210.124.40:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war"
+    dest: "/home/ansibleserver/workspace/Javawebappproject/SimpleWebApplication-9.1.14.war"
+    url_username: "{{ nexus_username }}"  # Credentials from the vault
+    url_password: "{{ nexus_password }}"  # Credentials from the vault
   become: true
 
-# Stop the Tomcat service
+- name: Backup the WAR file to myartifact directory
+  copy:
+    src: "/home/ansibleserver/workspace/Javawebappproject/SimpleWebApplication-9.1.14.war"
+    dest: "/home/tomcat/myartifact/SimpleWebApplication-9.1.14.war"
+    remote_src: yes
+  become: true
+
 - name: Stop Tomcat service
   systemd:
     name: tomcat
     state: stopped
-  become: yes
+  become: true
 
-# Deploy the WAR file
-- name: Deploy WAR file
+- name: Deploy WAR file to webapps directory
   copy:
-    src: /home/tomcat/mybackup/SimpleWebApplication.war
-    dest: /home/tomcat/apache-tomcat-10.1.31/webapps/SimpleWebApplication.war
+    src: "/home/ansibleserver/workspace/Javawebappproject/SimpleWebApplication-9.1.14.war"
+    dest: "/home/tomcat/apache-tomcat-10.1.31/webapps/SimpleWebApplication-9.1.14.war"
     remote_src: yes
-  become: yes
+  become: true
 
-- name: Set ownership of the WAR file to tomcat user and group
+- name: Set ownership of the WAR file in webapps
   file:
-    path: /home/tomcat/apache-tomcat-10.1.31/webapps/SimpleWebApplication.war
+    path: "/home/tomcat/apache-tomcat-10.1.31/webapps/SimpleWebApplication-9.1.14.war"
     owner: tomcat
     group: tomcat
     mode: '0644'
   become: true
 
-# Start the Tomcat service
 - name: Start Tomcat service
   systemd:
     name: tomcat
     state: started
     enabled: true
-  become: yes
+  become: true

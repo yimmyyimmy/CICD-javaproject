@@ -52,5 +52,7 @@
 ## green.example.com
 ## blue.example.com
 [jenkinsServers]
-172.31.33.236 ansible_user=ansibleserver ansible_ssh_private_key_file=/home/ubuntu/zomatokey.pem 
+172.31.33.236 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/zomatokey.pem 
+172.31.33.236 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ansibleserver/zomatokey.pem
+#172.31.33.236 ansible_user=ansibleserver ansible_ssh_private_key_file=/home/ansibleserver/zomatokey.pem
 #172.31.38.30 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/zomatokey.pem
