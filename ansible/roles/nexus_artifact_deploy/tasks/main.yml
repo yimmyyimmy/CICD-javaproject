@@ -29,7 +29,7 @@
 
 - name: Download WAR file from Nexus repository
   get_url:
-    url: "http://44.210.124.40:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war"
+    url: "http://3.84.3.85:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war"
     dest: "/home/ansibleserver/workspace/Javawebappproject/SimpleWebApplication-9.1.14.war"
     url_username: "{{ nexus_username }}"  # Credentials from the vault
     url_password: "{{ nexus_password }}"  # Credentials from the vault
