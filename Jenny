@@ -33,8 +33,8 @@ pipeline {
     //Run the playbook
     stage('RunPlaybook') {
       steps {
-        //sh "ansible-playbook -i inventory/canarabank.hosts --private-key=$AWS_EC2_PRIVATE_KEY /etc/ansible/playbooks/tomcatinstallaion.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
-        sh "ansible-playbook /etc/ansible/tomcatinstallaion.yml"
+        sh "ansible-playbook -i inventory/canarabank.hosts --private-key=$AWS_EC2_PRIVATE_KEY /etc/ansible/playbooks/tomcatinstallaion.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
+        //sh "ansible-playbook /etc/ansible/tomcatinstallaion.yml"
       }
     }
   
