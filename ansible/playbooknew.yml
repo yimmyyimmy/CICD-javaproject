@@ -1,0 +1,13 @@
+---
+- hosts: tomcatServers
+  vars:
+    war_url: http://100.24.43.221:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war
+    nexus_username: "admin"
+    nexus_password: "admin12"
+  become_user: tomcat
+  become: true
+  roles:
+    - stoptomcatrole
+    - takebackupwar
+    - downloadwarfrmnexus
+    - starttomcatrole
