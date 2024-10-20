@@ -23,7 +23,7 @@ pipeline {
         ]], 
         credentialsId: 'nexus_credentials', 
         groupId: 'com.maven', 
-        nexusUrl: '65.2.143.178:8081', // Ensure protocol is included
+        nexusUrl: '13.233.140.41:8081', // Ensure protocol is included
         nexusVersion: 'nexus3', 
         protocol: 'http', 
         repository: 'maven-releases', 
