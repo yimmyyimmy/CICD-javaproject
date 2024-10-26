@@ -1,0 +1,81 @@
+pipeline {
+  agent {
+    label "java"
+  }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'mvn clean install'
+      }
+    }
+    stage('jacoco') {
+      steps {
+        jacoco()
+      }
+    }
+    stage('SonarQube analysis') {
+      steps {
+        script {
+          def scannerHome = tool 'sonarqubescanner';
+          withSonarQubeEnv('sonarqube') {
+            sh """
+              ${scannerHome}/bin/sonar-scanner \
+              -Dsonar.projectKey=javawebappproject \
+              -Dsonar.projectName=javawebappproject \
+              -Dsonar.projectVersion=1.0 \
+              -Dsonar.java.binaries='target/classes'
+            """
+          }
+        }
+      }
+    }
+    stage("Sonar Quality Gate Check") {
+      steps {
+        timeout(time: 1, unit: 'MINUTES') {
+          script {
+            def qualityGate = waitForQualityGate()
+            if (qualityGate.status != 'OK') {
+              error "Pipeline aborted due to quality gate failure: ${qualityGate.status}"
+            }
+          }
+        }
+      }
+    }
+    stage('Upload to Nexus') {
+      steps {
+        nexusArtifactUploader artifacts: [[artifactId: 'SimpleWebApplication', classifier: '', file: 'target/SimpleWebApplication.war', type: 'war']],
+        credentialsId: 'jenkins-nexus', groupId: 'com.maven', nexusUrl: '100.24.43.221:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: '1.0.0'
+      }
+    }
+
+    // New Docker build, push, and deploy stage
+    stage('Docker Build, Push, and Deploy') {
+      agent { label 'docker-node' }  // Ensure 'docker-node' is the label of the Docker-enabled node
+      steps {
+        script {
+          def imageName = "pramodprasanna/carwebsitelunch:1.0"
+
+          // Build Docker image
+          sh "docker build -f Dockerfile -t ${imageName} ."
+
+          // Push Docker image to Docker Hub
+          withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials-id',
+                                            usernameVariable: 'DOCKER_USER',
+                                            passwordVariable: 'DOCKER_PASSWORD')]) {
+            sh "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD"
+            sh "docker push ${imageName}"
+          }
+
+          // Deploy Docker image to container
+          sh "docker run -d --name carwebsitelunch -p 8080:8080 ${imageName}"
+        }
+      }
+    }
+  }
+  post {
+    always {
+      echo 'Cleaning up...'
+      cleanWs()
+    }
+  }
+}

@@ -1,0 +1,29 @@
+FROM ubuntu
+
+# Install required packages and Java
+RUN apt-get update -y && \
+    apt install openjdk-17-jdk wget tar vim -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create tomcat user and directory
+RUN mkdir -p /home/tomcat && \
+    useradd -d /home/tomcat -s /bin/bash tomcat
+
+# Set working directory and download Tomcat
+WORKDIR /home/tomcat
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.96/bin/apache-tomcat-9.0.96.tar.gz /home/tomcat/
+
+# Extract, rename, set permissions, and clean up
+RUN tar -xvf apache-tomcat-9.0.96.tar.gz && \
+    rm -rf apache-tomcat-9.0.96.tar.gz && \
+    mv apache-tomcat-9.0.96 tomcat && \
+    chown -R tomcat:tomcat /home/tomcat/tomcat
+
+# Switch to tomcat user
+USER tomcat
+
+# Expose Tomcat port
+EXPOSE 8080
+
+# Start Tomcat
+CMD ["/home/tomcat/tomcat/bin/catalina.sh", "run"]

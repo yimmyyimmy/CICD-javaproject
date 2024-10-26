@@ -1,0 +1,72 @@
+FROM ubuntu
+
+# Install required packages and Java
+RUN apt-get update -y && \
+    apt install openjdk-17-jdk wget tar vim -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create tomcat user and directory
+RUN mkdir -p /home/tomcat && \
+    useradd -d /home/tomcat -s /bin/bash tomcat
+
+# Set working directory and download Tomcat
+WORKDIR /home/tomcat
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.96/bin/apache-tomcat-9.0.96.tar.gz /home/tomcat/
+
+# Extract Tomcat, rename it, and set permissions
+RUN tar -xvf apache-tomcat-9.0.96.tar.gz && \
+    rm -rf apache-tomcat-9.0.96.tar.gz && \
+    mv apache-tomcat-9.0.96 tomcat && \
+    chown -R tomcat:tomcat /home/tomcat/tomcat
+
+# Create webapps directory if it doesn't exist
+RUN mkdir -p /home/tomcat/tomcat/webapps
+
+# Download the .war file from Nexus with credentials
+ARG NEXUS_USERNAME
+ARG NEXUS_PASSWORD
+RUN wget --user=$NEXUS_USERNAME --password=$NEXUS_PASSWORD -O /home/tomcat/tomcat/webapps/SimpleWebApplication-9.1.14.war \
+    http://44.207.0.8:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war
+
+# Switch to tomcat user
+USER tomcat
+
+# Expose Tomcat port
+EXPOSE 8080
+
+# Start Tomcat
+CMD ["/home/tomcat/tomcat/bin/catalina.sh", "run"]
+
+
+
+
+
+
+
+
+
+commands to run this 
+ docker build -f carwebsite --build-arg NEXUS_USERNAME=admin --build-arg NEXUS_PASSWORD=admin12 -t carpage:1.0 .   #to build and also -f is for customiseddockerfilename can use
+
+docker images      #check images is built or not
+
+docker run -d -p 8080:8080 --name carpage_container carpage:1.0   #create container  and also we can specify the name also
+
+docker exec -it b1cdaf5772f1 /bin/bash   #to enter the container and check the webapps folder once
+do change the tomcat-user.xml file and add manager credential then exit the container
+ 
+docker restart carpage_container
+
+docker ps    #docker containers running
+
+
+goto webpage:
+http://34.229.227.227:8080/SimpleWebApplication-9.1.14/
+
+
+push to docker hub:
+docker login -u USERNAME
+docker tag carpage:1.0 pramodprasanna/carwebsitelunch:1.0
+docker push pramodprasanna/carwebsitelunch:1.0
+
+
