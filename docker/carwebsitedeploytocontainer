@@ -46,7 +46,7 @@ CMD ["/home/tomcat/tomcat/bin/catalina.sh", "run"]
 
 
 commands to run this 
- docker build -f carwebsite --build-arg NEXUS_USERNAME=admin --build-arg NEXUS_PASSWORD=admin12 -t carpage:1.0 .   #to build
+ docker build -f carwebsite --build-arg NEXUS_USERNAME=admin --build-arg NEXUS_PASSWORD=admin12 -t carpage:1.0 .   #to build and also -f is for customiseddockerfilename can use
 
 docker images      #check images is built or not
 
