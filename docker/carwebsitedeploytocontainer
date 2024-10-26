@@ -48,7 +48,7 @@ CMD ["/home/tomcat/tomcat/bin/catalina.sh", "run"]
 commands to run this 
  docker build -f carwebsite --build-arg NEXUS_USERNAME=admin --build-arg NEXUS_PASSWORD=admin12 -t carpage:1.0 .   #to build
 docker images      #check images is built or not
-docker run -d -p 8080:8080 --name carpage_container carpage:1.0   #create container
+docker run -d -p 8080:8080 --name carpage_container carpage:1.0   #create container  and also we can specify the name also
 docker exec -it b1cdaf5772f1 /bin/bash   #to enter the container and check the webapps folder once
 docker ps    #docker containers running
 
