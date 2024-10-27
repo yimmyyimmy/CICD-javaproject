@@ -1,27 +1,7 @@
-/*pipeline {
-  agent {
-    label "docker" {
-            image 'maven:3.8.4-jdk-11'
-        }
-  }
-   stages {
-    stage('Build') {
-      steps {
-        sh 'mvn clean install'
-      }
-    }
-    stage('jacoco') {
-      steps {
-        jacoco()
-      }
-    }
-}
-}
-*/
 pipeline {
     agent {  label "java" }
       environment {
-        NEXUS_URL = 'http://13.232.45.235:8081/repository/maven-releases/'
+        NEXUS_URL = 'http://13.233.143.179:8081/repository/maven-releases/'
         WAR_FILE = 'SimpleWebApplication.war'  // Specify the WAR file name
         DOCKER_IMAGE_NAME = 'tommy'
         DOCKER_TAG = 'latest'  // Specify your Docker tag
