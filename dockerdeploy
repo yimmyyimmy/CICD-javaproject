@@ -31,11 +31,11 @@ pipeline {
                 jacoco()
             }
         }
-        stage('deploy to container')
+        stage('run the container')
             {
             agent { label 'docker' }
                steps {
-          sh "ssh ubuntu@172.31.3.167 'docker images' 'docker run -d -p 5050:8080 tommy'"
+          sh "ssh root@172.31.3.167 'docker images' 'docker run -d -p 5050:8080 tommy'"
         }
       }
 }
