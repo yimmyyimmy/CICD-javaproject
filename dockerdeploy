@@ -31,5 +31,11 @@ pipeline {
                 jacoco()
             }
         }
-    }
+        stage('dploy to container')
+            agent { label 'docker' }
+               steps {
+          sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.3.167 docker run -d -p 5050:8080 tommy"
+        }
 }
+    }
+
