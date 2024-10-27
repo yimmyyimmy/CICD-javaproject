@@ -52,6 +52,7 @@ pipeline {
 agent {  label "docker" }
             steps {
                 script {
+                    sh 'pwd'
                     sh 'ls -la'
                     // Build the Docker image
                     sh """
