@@ -34,8 +34,10 @@ pipeline {
         stage('run the container')
             {
             agent { label 'docker' }
+       steps{
            sshagent(['docker_ssh_agent_cred_to_run']) {
           sh "ssh ubuntu@172.31.3.167 'docker run -d -p 5050:8080 tommy'"
+}
 }
       }
 }
