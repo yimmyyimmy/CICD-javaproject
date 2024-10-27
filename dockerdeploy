@@ -35,7 +35,7 @@ pipeline {
             {
             agent { label 'docker' }
                steps {
-          sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.3.167 docker run -d -p 5050:8080 tommy"
+          sh "ssh -o StrictHostKeyChecking=no root@172.31.3.167 docker run -d -p 5050:8080 tommy"
         }
       }
 }
