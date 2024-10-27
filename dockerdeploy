@@ -48,16 +48,24 @@ pipeline {
         version: '9.1.14'
       }
     }
+ stage('build image') {
+            steps {
+               sh "docker build -t yimmyyimmy/tommy ."
+            }
+        }
+
+/*
         stage('run the container')
             {
             agent { label 'docker' }
        steps{
            sshagent(['docker_ssh_agent_cred_to_run']) {
-         sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.3.167 "docker run -d -p 5050:8080 tommy"'
+         //sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.3.167 "docker run -d -p 5050:8080 tommy"'
          //sh "ssh -i /home/ec2-user/Linux.pem ubuntu@172.31.3.167 'docker run -d -p 5050:8080 tommy'"
 }
 }
       }
+*/
 }
 }
 
