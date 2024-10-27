@@ -1,0 +1,15 @@
+pipeline {
+  agent {
+    label "docker"
+  }
+   stages {
+    stage('Build') {
+      steps {
+        sh 'mvn clean install'
+      }
+    }
+    stage('jacoco') {
+      steps {
+        jacoco()
+      }
+    }
