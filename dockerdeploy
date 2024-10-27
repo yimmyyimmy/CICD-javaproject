@@ -52,6 +52,7 @@ pipeline {
 agent {  label "docker" }
             steps {
                 script {
+                    sh 'ls -la'
                     // Build the Docker image
                     sh """
                     docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_TAG} .
