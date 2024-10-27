@@ -20,6 +20,14 @@
 */
 pipeline {
     agent {  label "java" }
+      environment {
+        NEXUS_URL = 'http://13.232.45.235:8081/repository/maven-releases/'
+        WAR_FILE = 'SimpleWebApplication.war'  // Specify the WAR file name
+        DOCKER_IMAGE_NAME = 'tommy'
+        DOCKER_TAG = 'latest'  // Specify your Docker tag
+        CONTAINER_NAME = 'loving_ramanujan'
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -48,12 +56,38 @@ pipeline {
         version: '9.1.14'
       }
     }
- stage('build image') {
+        stage('Pull WAR from Nexus') {
             steps {
-               sh "docker build -t yimmyyimmy/tommy ."
+                script {
+                    // Pull the WAR file from Nexus
+                    sh """
+                    curl -u 'username:password' -O ${NEXUS_URL}/${WAR_FILE}
+                    """
+                }
+            }
+}
+        
+  stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh """
+                    docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_TAG} .
+                    """
+                }
             }
         }
-
+stage('Run Docker Container') {
+            steps {
+                script {
+                    // Stop and remove the container if it already exists
+                    sh """
+                    docker rm -f ${CONTAINER_NAME} || true
+                    docker run -d --name ${CONTAINER_NAME} -p 5050:8080 ${DOCKER_IMAGE_NAME}:${DOCKER_TAG}
+                    """
+                }
+            }
+        }
 /*
         stage('run the container')
             {
