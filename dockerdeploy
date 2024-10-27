@@ -37,6 +37,7 @@ pipeline {
       }
     }
         stage('Pull WAR from Nexus') {
+         agent {  label "docker" }
             steps {
                 script {
                     // Pull the WAR file from Nexus
