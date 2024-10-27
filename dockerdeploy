@@ -19,7 +19,7 @@
 }
 */
 pipeline {
-    agent { label 'docker' }
+    agent {  label "java" }
     stages {
         stage('Build') {
             steps {
