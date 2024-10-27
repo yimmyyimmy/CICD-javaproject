@@ -48,6 +48,7 @@ pipeline {
 }
         
   stage('Build Docker Image') {
+agent {  label "docker" }
             steps {
                 script {
                     // Build the Docker image
@@ -58,6 +59,7 @@ pipeline {
             }
         }
 stage('Run Docker Container') {
+agent {  label "docker" }
             steps {
                 script {
                     // Stop and remove the container if it already exists
