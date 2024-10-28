@@ -1,7 +1,7 @@
 pipeline {
     agent {  label "java" }
       environment {
-        NEXUS_URL = 'http://13.232.236.121:8081/repository/maven-releases/'    // always change the ip address
+        NEXUS_URL = 'http://13.232.236.121:8081/repository/maven-releases/'    // always change the ip address ad delete the old war deployed
         WAR_FILE = 'SimpleWebApplication.war'  // Specify the WAR file name
         DOCKER_IMAGE_NAME = 'jjjjj'            //change the image name
         DOCKER_TAG = 'latest'  // Specify your Docker tag
