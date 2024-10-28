@@ -5,7 +5,7 @@ pipeline {
         WAR_FILE = 'SimpleWebApplication.war'  // Specify the WAR file name
         DOCKER_IMAGE_NAME = 'jjjjj'
         DOCKER_TAG = 'latest'  // Specify your Docker tag
-        CONTAINER_NAME = 'loving_ramanujan'
+        CONTAINER_NAME = 'Dockerfile'
     }
 
     stages {
