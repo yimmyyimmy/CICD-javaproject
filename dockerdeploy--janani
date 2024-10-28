@@ -106,7 +106,8 @@ CMD ["/home/tomcatcar/tomcatcar/bin/catalina.sh", "run"]
 //make sure to start the image -- docker start Dockerfile
 //docker exec -it Dockerfile /bin/bash
 // cd /home/tomcatcar1/tomcatcar1/
-// you will find conf and weapps directory to make the confifurations
+// you will find conf and weapps directory to make the configurations
+// access via browser to see the application deployed -- http://15.206.212.165:5555/SimpleWebApplication-9.1.14/
 
 */
 
