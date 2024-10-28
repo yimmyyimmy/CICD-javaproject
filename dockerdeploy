@@ -69,7 +69,7 @@ agent {  label "docker" }
                     // Stop and remove the container if it already exists
                     sh """
                     docker rm -f ${CONTAINER_NAME} || true
-                    docker run -d --name ${CONTAINER_NAME} -p 5050:8080 ${DOCKER_IMAGE_NAME}:${DOCKER_TAG}
+                    docker run -d --name ${CONTAINER_NAME} -p 5555:8080 ${DOCKER_IMAGE_NAME}:${DOCKER_TAG}
                     """
                 }
             }
