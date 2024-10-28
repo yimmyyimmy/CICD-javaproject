@@ -1,9 +1,9 @@
 pipeline {
     agent {  label "java" }
       environment {
-        NEXUS_URL = 'http://13.232.236.121:8081/repository/maven-releases/'
+        NEXUS_URL = 'http://13.232.236.121:8081/repository/maven-releases/'    // always change the ip address
         WAR_FILE = 'SimpleWebApplication.war'  // Specify the WAR file name
-        DOCKER_IMAGE_NAME = 'jjjjj'
+        DOCKER_IMAGE_NAME = 'jjjjj'            //change the image name
         DOCKER_TAG = 'latest'  // Specify your Docker tag
         CONTAINER_NAME = 'Dockerfile'
     }
@@ -29,7 +29,7 @@ pipeline {
         ]], 
         credentialsId: 'nexus_credentials', 
         groupId: 'com.maven', 
-        nexusUrl: '13.232.236.121:8081', // Ensure protocol is included
+        nexusUrl: '13.232.236.121:8081', // always change the ip address
         nexusVersion: 'nexus3', 
         protocol: 'http', 
         repository: 'maven-releases', 
@@ -69,24 +69,44 @@ agent {  label "docker" }
                     // Stop and remove the container if it already exists
                     sh """
                     docker rm -f ${CONTAINER_NAME} || true
-                    docker run -d --name ${CONTAINER_NAME} -p 5555:8080 ${DOCKER_IMAGE_NAME}:${DOCKER_TAG}
+                    docker run -d --name ${CONTAINER_NAME} -p 5555:8080 ${DOCKER_IMAGE_NAME}:${DOCKER_TAG}  //enable the port 5555 
                     """
                 }
             }
         }
-/*
-        stage('run the container')
-            {
-            agent { label 'docker' }
-       steps{
-           sshagent(['docker_ssh_agent_cred_to_run']) {
-         //sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.3.167 "docker run -d -p 5050:8080 tommy"'
-         //sh "ssh -i /home/ec2-user/Linux.pem ubuntu@172.31.3.167 'docker run -d -p 5050:8080 tommy'"
-}
-}
-      }
-*/
+
 }
 }
 
+/*
+//This the Docker file present in /home/ubuntu/workspace/dockercicd/Dockerfile
+//your war also gets delpyed here in /home/ubuntu/workspace/dockercicd
+ROM ubuntu
+RUN apt-get update -y && \
+    apt install openjdk-17-jdk wget tar vim -y && \
+    rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /home/tomcatcar && \
+    useradd -d /home/tomcatcar -s /bin/bash tomcatcar
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.96/bin/apache-tomcat-9.0.96.tar.gz /home/tomcatcar/
+RUN pwd
+RUN tar -zxvf /home/tomcatcar/apache-tomcat-9.0.96.tar.gz -C /home/tomcatcar && \
+    rm -rf /home/tomcatcar/apache-tomcat-9.0.96.tar.gz && \
+    mv /home/tomcatcar/apache-tomcat-9.0.96 /home/tomcatcar/tomcatcar && \
+    chown -R tomcatcar:tomcatcar /home/tomcatcar/tomcatcar
+ENV ADMIN_USER=admin
+ENV ADMIN_PASSWORD=passw0rd
+RUN wget --user=admin --password=passw0rd -O /home/tomcatcar/tomcatcar/webapps/SimpleWebApplication-9.1.14.war \
+    http://13.127.19.239:8081/repository/maven-releases/com/maven/SimpleWebApplication/9.1.14/SimpleWebApplication-9.1.14.war
+USER tomcatcar
+EXPOSE 8080
+CMD ["/home/tomcatcar/tomcatcar/bin/catalina.sh", "run"]
+
+//manually do the following steps
+//get into your container and add roles and comment vale tags
+//make sure to start the image -- docker start Dockerfile
+//docker exec -it Dockerfile /bin/bash
+// cd /home/tomcatcar1/tomcatcar1/
+// you will find conf and weapps directory to make the confifurations
+
+*/
 
