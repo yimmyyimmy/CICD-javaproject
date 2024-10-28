@@ -41,6 +41,7 @@ pipeline {
             steps {
                 script {
                     // Pull the WAR file from Nexus
+                    sh 'pwd'
                     sh """
                     curl -u 'username:password' -O ${NEXUS_URL}/${WAR_FILE}
                     """
