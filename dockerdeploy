@@ -56,7 +56,7 @@ agent {  label "docker" }
                     sh 'ls -la'
                     // Build the Docker image
                     sh """
-                    docker build -f Dockerfile-t ${DOCKER_IMAGE_NAME}:${DOCKER_TAG} .
+                    docker build -f Dockerfile -t ${DOCKER_IMAGE_NAME}:${DOCKER_TAG} .
                     """
                 }
             }
